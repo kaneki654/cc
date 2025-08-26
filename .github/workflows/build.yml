@@ -1,0 +1,35 @@
+name: Build APK
+
+on:
+  workflow_dispatch: # lets you manually trigger builds
+  push:
+    branches:
+      - main  # runs when you push to main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip \
+              autoconf libtool pkg-config zlib1g-dev libncurses5-dev \
+              libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+
+          pip install buildozer cython
+
+      - name: Build APK
+        run: |
+          buildozer init || true
+          buildozer -v android debug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cc_tool-apk
+          path: bin/*.apk
