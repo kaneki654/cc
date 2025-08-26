@@ -1,0 +1,31 @@
+[app]
+# App details
+title = CC Tool
+package.name = cctool
+package.domain = org.example
+source.dir = .
+source.include_exts = py,png,jpg,kv,atlas
+version = 1.0
+
+# Main script
+source.main = main.py
+
+# Dependencies
+requirements = python3,kivy,requests,openssl
+
+# Orientation
+orientation = portrait
+
+# Permissions (needed for internet requests)
+android.permissions = INTERNET
+
+# Hide the title bar
+fullscreen = 0
+
+[buildozer]
+log_level = 2
+warn_on_root = 1
+
+# (Optional: speeds up builds on GitHub Actions/Docker)
+build_dir = .buildozer
+bin_dir = bin
